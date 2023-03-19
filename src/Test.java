@@ -15,6 +15,14 @@ public class Test {
         }
     }
 
+    public static void testi(boolean tulemus, boolean peabOlema, String kirjeldus){
+        if(tulemus != peabOlema){
+            naidataErrori("[-] Ootasin: " + peabOlema + ", aga sain: " + tulemus);
+        }else{
+            naidataOk("[+] - "+kirjeldus);
+        }
+    }
+
     public static void testi(String tulemus, String peabOlema, String kirjeldus){
         if(!tulemus.equals(peabOlema)){
             naidataErrori("[-] Ootasin: " + peabOlema + ", aga sain: " + tulemus);
@@ -52,6 +60,16 @@ public class Test {
         tegelane.setXp(99);
         testi(tegelane.getInfo(), tulemus, kirjeldus);
 
+        kirjeldus = "Tegelane setXp, arvutaLvl, surendaHpXpBaasil xp = 100";
+        tulemus = "Nimi: Lord LVL:1 HP:100 XP:100";
+        tegelane.setXp(100);
+        testi(tegelane.getInfo(), tulemus, kirjeldus);
+
+        kirjeldus = "Tegelane setXp, arvutaLvl, surendaHpXpBaasil xp = 101";
+        tulemus = "Nimi: Lord LVL:2 HP:110 XP:101";
+        tegelane.setXp(101);
+        testi(tegelane.getInfo(), tulemus, kirjeldus);
+
         kirjeldus = "Tegelane setXp, arvutaLvl, surendaHpXpBaasil xp = 300";
         tulemus = "Nimi: Lord LVL:3 HP:120 XP:300";
         tegelane.setXp(300);
@@ -76,7 +94,90 @@ public class Test {
 
 
     }
+
+    public static void testiBoss(){
+        System.out.println();
+        System.out.println("Test boss klass");
+        String nimi = "Boss";
+        int hp = 100;
+        Boss boss = new Boss(nimi, hp);
+
+        String kirjeldus = "Boss getInfo meetod";
+        testi(boss.getInfo(), "Nimi: "+nimi + " HP:"+ hp, kirjeldus);
+
+        kirjeldus = "Boss toString meetod";
+        testi(boss.toString(), nimi, kirjeldus);
+
+        kirjeldus = "Boss lisaOskus and getOskus test";
+        Oskus oskus1 = new Oskus("t", 1, 1, new String[]{"ok"}, "ok");
+
+        boss.lisaOskust(oskus1);
+
+        testi(boss.getOskused().size(), 1, kirjeldus);
+
+        kirjeldus = "bossAttack meetod on olemas ja kasutame ühe skilli";
+        testi(boss.ründa(), true, kirjeldus);
+        kirjeldus = "Uesti ründame, aga rünnak on ootel, seega pass, ehk false";
+        testi(boss.ründa(), false, kirjeldus);
+    }
+
+    public static void testiOskus(){
+        System.out.println();
+        System.out.println("Test Oskus");
+
+        String nimi = "Attack 1";
+        int dmg = 10;
+        int cd = 1;
+        String[] omadused = {"stun"};
+        String tuup = "tuli";
+
+        Oskus oskus = new Oskus(nimi, dmg ,cd, omadused, tuup);
+
+        String kirjeldus = "Test toString meetod";
+        String peabOlema = "Attack 1 (10 dmg) (1 cd)";
+        testi(oskus.toString(), peabOlema, kirjeldus);
+
+        kirjeldus = "Test getNimi";
+        testi(oskus.getNimi(), nimi, kirjeldus);
+
+        kirjeldus = "Test getCD";
+        testi(oskus.getCd(), 1, kirjeldus);
+
+        kirjeldus = "Test getSaanKasutada";
+        testi(oskus.getSaanKasutada(), true, kirjeldus);
+
+        kirjeldus = "getOmadus";
+        testi(oskus.getOmadused().length, 1, kirjeldus);
+
+        kirjeldus = "getTuup";
+        testi(oskus.getTuup(), tuup, kirjeldus);
+
+        kirjeldus = "kasutaOskust -> ei saa kasutada";
+        oskus.kasutaOskust();
+        testi(oskus.getSaanKasutada(), false, kirjeldus);
+        peabOlema = "Attack 1 (10 dmg) (1 cd) (saab kasutada jargmisel sammul)";
+        kirjeldus = "kui ei saa kasutada, siis peab olema teave, et saan " +
+                "kasutada jargmisel sammul";
+        testi(oskus.toString(), peabOlema, kirjeldus);
+
+        kirjeldus = "vahenedaOnVajaOodata -> true kuna cd 1";
+        oskus.vahenedaOnVajaOodata();
+        testi(oskus.getSaanKasutada(), true, kirjeldus);
+
+        kirjeldus = "Kasutame oskust, millel cd on 3, ja kontrollime toString";
+        oskus = new Oskus(nimi, dmg ,3, omadused, tuup);
+        oskus.kasutaOskust();
+        peabOlema = "Attack 1 (10 dmg) (3 cd) (saab kasutada parast 3 sammu)";
+        testi(oskus.toString(), peabOlema, kirjeldus);
+
+    }
+
+    public static void testiNorkus(){
+
+    }
     public static void main(String[] args) {
         testiTegelane();
+        testiBoss();
+        testiOskus();
     }
 }

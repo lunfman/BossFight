@@ -10,7 +10,7 @@ public class Mang {
 
 
     Tegelane tegelaseValik;
-    Tegelane bossiValik;
+    Boss bossiValik;
 
     public void valiBossi(){
         Scanner scanner = new Scanner(System.in);
@@ -20,7 +20,7 @@ public class Mang {
         valik = scanner.nextInt();
 
         if(valik==1){
-            bossiValik = tegelased.bossid.get(0);
+            bossiValik = (Boss) tegelased.bossid.get(0);
         }
 
         if(valik == loendur){
@@ -40,7 +40,7 @@ public class Mang {
         valik = scanner.nextInt();
 
         if(valik==1){
-            tegelaseValik = tegelased.tegelased.get(0);
+            tegelaseValik = (Tegelane) tegelased.tegelased.get(0);
         }
 
         if(valik == loendur){

@@ -1,14 +1,15 @@
 import java.util.List;
 
 public class Abi {
-    public static int valjastaNumbigaJarjestatud(List<Tegelane> list){
+    public static int valjastaNumbigaJarjestatud(List<ManguTegelane> list){
         int loendur = 1;
-        for (Tegelane tegelane: list) {
+        for (ManguTegelane tegelane: list) {
             System.out.println(loendur+". " + tegelane);
             loendur ++;
         }
         return loendur;
     }
+
 
     public static int valjastaNumbigaJarjestatudOskus(List<Oskus> list){
         int loendur = 1;
