@@ -109,7 +109,7 @@ public class Test {
         testi(boss.toString(), nimi, kirjeldus);
 
         kirjeldus = "Boss lisaOskus and getOskus test";
-        Oskus oskus1 = new Oskus("t", 1, 1, new String[]{"ok"}, "ok");
+        Oskus oskus1 = new Runnak("t", 1, new String[]{"ok"}, "ok", 10);
 
         boss.lisaOskust(oskus1);
 
@@ -123,7 +123,7 @@ public class Test {
 
     public static void testiOskus(){
         System.out.println();
-        System.out.println("Test Oskus");
+        System.out.println("Test Runnak");
 
         String nimi = "Attack 1";
         int dmg = 10;
@@ -131,7 +131,7 @@ public class Test {
         String[] omadused = {"stun"};
         String tuup = "tuli";
 
-        Oskus oskus = new Oskus(nimi, dmg ,cd, omadused, tuup);
+        Oskus oskus = new Runnak(nimi ,cd, omadused, tuup, 10);
 
         String kirjeldus = "Test toString meetod";
         String peabOlema = "Attack 1 (10 dmg) (1 cd)";
@@ -165,9 +165,16 @@ public class Test {
         testi(oskus.getSaanKasutada(), true, kirjeldus);
 
         kirjeldus = "Kasutame oskust, millel cd on 3, ja kontrollime toString";
-        oskus = new Oskus(nimi, dmg ,3, omadused, tuup);
+        oskus = new Runnak(nimi, 3, omadused, tuup, 10);
         oskus.kasutaOskust();
         peabOlema = "Attack 1 (10 dmg) (3 cd) (saab kasutada parast 3 sammu)";
+        testi(oskus.toString(), peabOlema, kirjeldus);
+
+        System.out.println();
+        System.out.println("Test Kaitse");
+        kirjeldus = "Kaitse toString";
+        oskus = new Kaitse("Kaitse 1",cd,omadused,tuup);
+        peabOlema = "Kaitse 1 (1 cd)";
         testi(oskus.toString(), peabOlema, kirjeldus);
 
     }

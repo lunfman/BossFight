@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.util.function.Function;
 
 public class Mang {
     String boss, character;

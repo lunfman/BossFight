@@ -1,14 +1,13 @@
-public class Oskus {
+public abstract class Oskus {
 
     private String nimi, tuup;
-    private int dmg, cd, onVajaOodata = 0;
+    private int  cd, onVajaOodata = 0;
     private String[] omadused;
     private boolean saanKasutada = true;
 
-    public Oskus(String nimi, int dmg, int cd, String[] omadused ,String tuup) {
+    public Oskus(String nimi, int cd, String[] omadused ,String tuup) {
         this.nimi = nimi;
         this.tuup = tuup;
-        this.dmg = dmg;
         this.cd = cd;
         this.omadused = omadused;
     }
@@ -19,10 +18,6 @@ public class Oskus {
 
     public String getTuup() {
         return tuup;
-    }
-
-    public int getDmg() {
-        return dmg;
     }
 
     public int getCd() {
@@ -44,19 +39,26 @@ public class Oskus {
                 " (saab kasutada parast "+ onVajaOodata +" sammu)" : " (saab kasutada jargmisel sammul)";
     }
 
+    public String getKirjeldus() {
+        return nimi  + " ("+cd + " cd)";
+    }
 
     @Override
     public String toString() {
-        String esimeneOsa = nimi + " ("+dmg + " dmg) " + "("+cd + " cd)";
+        String esimeneOsa = getKirjeldus();
         return saanKasutada ? esimeneOsa : esimeneOsa + annaTeadaKuiKaiuOnVajaOodata();
     }
 
     public void kasutaOskust() {
+        //        onVajaOodata = cd+1;
         onVajaOodata = cd;
         saanKasutada = false;
     }
 
     public void vahenedaOnVajaOodata() {
+        if(onVajaOodata == 0){
+            return;
+        }
         onVajaOodata --;
         if(onVajaOodata == 0) saanKasutada = true;
     }

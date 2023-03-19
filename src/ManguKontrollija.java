@@ -30,14 +30,36 @@ public class ManguKontrollija {
     }
 
     public void valideeriOskust(){
-        System.out.println("validerin");
-        if(valik > tegelane.getOskused().size() -1 || valik < 0){
-            valjastaMangijaMenu();
+        if(valik > tegelane.getOskused().size()  || valik < 0){
+            System.out.println("Vale vaartus !!!!!!");
             return;
         }
+
+        if(valik == tegelane.getOskused().size()){
+            vahenedaKoikOskused();
+            return;
+        }
+
         Oskus oskus = tegelane.getOskus(valik);
-        System.out.println("vahenda dmg");
-        boss.vahenedaHp(oskus.getDmg());
+
+        if(!oskus.getSaanKasutada()){
+            System.out.println("Te, ei saa praegu kasutada, seda oskust!!!!!!!!!!");
+            return;
+        }
+        // kui jõuame siiamani, siis saame vahenedaCD
+        vahenedaKoikOskused();
+
+        if (oskus instanceof Runnak) {
+            boss.vahenedaHp(((Runnak) oskus).getDmg());
+            oskus.kasutaOskust();
+        }
+    }
+
+    public void vahenedaKoikOskused(){
+        System.out.println("kasuta");
+        for (Oskus oskus: tegelane.getOskused()){
+            oskus.vahenedaOnVajaOodata();
+        }
     }
 
     public void naitaManguMenu(){
@@ -50,12 +72,10 @@ public class ManguKontrollija {
     public void valjastaMangijaMenu(){
         naitaManguMenu();
         Scanner scanner = new Scanner(System.in);
-
         try {
             valik = scanner.nextInt()-1;
         }catch (InputMismatchException e){
             Abi.valjastaValeAndmed();
-            valjastaMangijaMenu();
             return;
         }
         valideeriOskust();

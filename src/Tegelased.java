@@ -13,13 +13,13 @@ public class Tegelased {
 
     public  void lisa (){
         Tegelane t1 = new Tegelane("Char", 100, 101);
-        Oskus oskus1 = new Oskus("Skill1", 10, 1, new String[]{"ok"}, "ok");
+        Runnak oskus1 = new Runnak("Skill1", 1, new String[]{"ok"}, "ok", 10);
 //        oskus1.nimi = "skill1";
         t1.lisaOskust(oskus1);
         tegelased.add(t1);
 
         Boss t2 = new Boss("Boss", 200);
-        Oskus oskus2 = new Oskus("Skill1", 10, 1, new String[]{"ok"}, "ok");
+        Runnak oskus2 = new Runnak("Skill1", 1, new String[]{"ok"}, "ok", 10);
 //        oskus1.nimi = "skill1";
         t2.lisaOskust(oskus2);
         bossid.add(t2);
