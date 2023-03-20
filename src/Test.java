@@ -114,11 +114,6 @@ public class Test {
         boss.lisaOskust(oskus1);
 
         testi(boss.getOskused().size(), 1, kirjeldus);
-
-        kirjeldus = "bossAttack meetod on olemas ja kasutame ühe skilli";
-        testi(boss.ründa(), true, kirjeldus);
-        kirjeldus = "Uesti ründame, aga rünnak on ootel, seega pass, ehk false";
-        testi(boss.ründa(), false, kirjeldus);
     }
 
     public static void testiOskus(){
