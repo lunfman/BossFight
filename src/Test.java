@@ -214,10 +214,8 @@ public class Test {
         testi(mk.isMangKestab(), false, kirjeldus);
         testi(mk.isViik(), false, kirjeldus);
 
-
-
-
     }
+
     public static void main(String[] args) {
         testiTegelane();
         testiBoss();

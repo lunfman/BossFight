@@ -7,13 +7,15 @@ public class ManguKontrollija {
     int valik;
     Oskus enneOliKasutatud;
 
-    private boolean tegelaneVoitsid = false, viik = false;
+    private boolean tegelaneVoitsid = false, viik = false, mangijaAlustab;
 
     private boolean mangKestab = true;
 
     public ManguKontrollija(Tegelane tegelane, Boss boss) {
         this.tegelane = tegelane;
         this.boss = boss;
+        this.mangijaAlustab = Math.random() >= 0.5;
+        otsustaKesAlustab();
     }
 
     public boolean isTegelaneVoitsid() {
@@ -87,7 +89,7 @@ public class ManguKontrollija {
                 kesKasutas.vahenedaHp(((Runnak) enneOliKasutatud).getDmg());
                 return;
             }
-            System.out.println(kesKasutas.getNimi() + "kasutas " + oskus.getNimi() + " " + ((Runnak) oskus).getDmg() + "dmg");
+            System.out.println(kesKasutas.getNimi() + " kasutas " + oskus.getNimi() + " " + ((Runnak) oskus).getDmg() + "dmg");
             kedaKontrollime.vahenedaHp(((Runnak) oskus).getDmg());
         }
     }
@@ -119,6 +121,15 @@ public class ManguKontrollija {
         int loendur = Abi.valjastaNumbigaJarjestatudOskus(tegelane.getOskused());
         System.out.println(loendur+". pass");
     }
+
+    public void otsustaKesAlustab(){
+        if(!mangijaAlustab){
+            System.out.println("Boss Alustab");
+            mangijaAlustab = true;
+            ründaTegelast();
+        }
+    }
+
 
     public void valjastaMangijaMenu(){
         leiaVoitjat();

@@ -26,7 +26,7 @@ public class Tegelased {
         Boss t2 = new Boss("Boss", 200);
         Runnak oskus5 = new Runnak("Skill1", 3, new String[]{"ok"}, "ok", 30);
         Kaitse oskus6 = new Kaitse("Skill2", 2, new String[]{"ok"}, "ok");
-        Runnak oskus7 = new VastuRunnak("Skill3", 2, new String[]{"ok"}, "ok", 10);
+        Runnak oskus7 = new Runnak("Skill3", 2, new String[]{"ok"}, "ok", 10);
         Runnak oskus8 = new VastuRunnak("Skill4", 2, new String[]{"ok"}, "ok", 10);
 
         t2.lisaOskust(oskus5);
