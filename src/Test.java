@@ -174,12 +174,54 @@ public class Test {
 
     }
 
-    public static void testiNorkus(){
+    public static void testiManguKontrollija(){
+        System.out.println("Test Mangu Kontrollija");
+        String nimi = "Lord";
+        int hp = 100;
+        int xp = 0;
+        Tegelane tegelane = new Tegelane(nimi, hp, xp);
+
+        String nimib = "Boss";
+        int hpb = 100;
+        Boss boss = new Boss(nimib, hpb);
+
+        ManguKontrollija mk = new ManguKontrollija(tegelane, boss);
+
+        String kirjeldus = "Kontrollime vaartust mangijaVoitsud";
+        testi(mk.isTegelaneVoitsid(), false, kirjeldus);
+
+        tegelane.setHp(0);
+        mk.leiaVoitjat();
+        kirjeldus = "Kontrollime mis juhtub, kui mangija hp = 0 ja kas mang veel kestab";
+        testi(mk.isTegelaneVoitsid(), false, kirjeldus);
+        testi(mk.isMangKestab(), false, kirjeldus);
+
+        kirjeldus = "Kontrollime mis juhtub kui boss hp = 0 ja mangija hp = 0";
+        mk = new ManguKontrollija(tegelane, boss);
+        tegelane.setHp(0);
+        boss.setHp(0);
+        mk.leiaVoitjat();
+        testi(mk.isTegelaneVoitsid(), false, kirjeldus);
+        testi(mk.isMangKestab(), false, kirjeldus);
+        testi(mk.isViik(), true, kirjeldus);
+
+        kirjeldus = "Kontrollime mis juhtub kui mängija võitsid";
+        mk = new ManguKontrollija(tegelane, boss);
+        boss.setHp(0);
+        tegelane.setHp(100);
+        mk.leiaVoitjat();
+        testi(mk.isTegelaneVoitsid(), true, kirjeldus);
+        testi(mk.isMangKestab(), false, kirjeldus);
+        testi(mk.isViik(), false, kirjeldus);
+
+
+
 
     }
     public static void main(String[] args) {
         testiTegelane();
         testiBoss();
         testiOskus();
+        testiManguKontrollija();
     }
 }

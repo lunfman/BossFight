@@ -5,58 +5,94 @@ public class ManguKontrollija {
     Tegelane tegelane;
     Boss boss;
     int valik;
+    Oskus enneOliKasutatud;
 
-    boolean mangKestab = true;
+    private boolean tegelaneVoitsid = false, viik = false;
+
+    private boolean mangKestab = true;
 
     public ManguKontrollija(Tegelane tegelane, Boss boss) {
         this.tegelane = tegelane;
         this.boss = boss;
     }
 
+    public boolean isTegelaneVoitsid() {
+        return tegelaneVoitsid;
+    }
+
+    public boolean isViik() {
+        return viik;
+    }
+
+    public boolean isMangKestab() {
+        return mangKestab;
+    }
+
     public void leiaVoitjat(){
         if(tegelane.getHp() <= 0 && boss.getHp() <= 0){
             System.out.println("Viik");
             mangKestab = false;
+            viik = true;
+            return;
         }
 
         if(tegelane.getHp() <= 0) {
             System.out.println("Kaotus");
             mangKestab = false;
+            return;
         }
         if (boss.getHp() <= 0) {
             System.out.println("Võit");
+            tegelaneVoitsid = true;
             mangKestab = false;
         }
     }
 
-    public void valideeriOskust(){
+    public boolean valideeriOskust(){
         if(valik > tegelane.getOskused().size()  || valik < 0){
             System.out.println("Vale vaartus !!!!!!");
-            return;
+            return false;
         }
 
         if(valik == tegelane.getOskused().size()){
             vahenedaKoikOskused(tegelane);
-            return;
+            enneOliKasutatud = null;
+            return true;
         }
 
         Oskus oskus = tegelane.getOskus(valik);
 
         if(!oskus.getSaanKasutada()){
             System.out.println("Te, ei saa praegu kasutada, seda oskust!!!!!!!!!!");
-            return;
+            return false;
         }
         // kui jõuame siiamani, siis saame vahenedaCD
         vahenedaKoikOskused(tegelane);
+        oskus.kasutaOskust();
+        vordleElmineJaPraeguneOskus(oskus, tegelane, boss);
+        enneOliKasutatud = oskus;
+        return true;
+    }
 
-        if (oskus instanceof Runnak) {
-            boss.vahenedaHp(((Runnak) oskus).getDmg());
-            oskus.kasutaOskust();
+    public void vordleElmineJaPraeguneOskus(Oskus oskus, ManguTegelane kesKasutas, ManguTegelane kedaKontrollime){
+        if(oskus instanceof VastuRunnak){
+            return;
+        }
+       if (oskus instanceof Runnak) {
+            if(enneOliKasutatud instanceof Kaitse){
+                System.out.println(kedaKontrollime.getNimi()+" kasutas kaitset,"+kesKasutas.getNimi() +"rünnak ebaõnnestas");
+                return;
+            }else if(enneOliKasutatud instanceof VastuRunnak){
+                System.out.println(kedaKontrollime.getNimi()+" kasutas vasturünnakut, rünnak ebaõnnestus ja "+ kesKasutas.getNimi() +" hp kahanes " +((Runnak) enneOliKasutatud).getDmg() + "võrra");
+                kesKasutas.vahenedaHp(((Runnak) enneOliKasutatud).getDmg());
+                return;
+            }
+            System.out.println(kesKasutas.getNimi() + "kasutas " + oskus.getNimi() + " " + ((Runnak) oskus).getDmg() + "dmg");
+            kedaKontrollime.vahenedaHp(((Runnak) oskus).getDmg());
         }
     }
 
     public void vahenedaKoikOskused(ManguTegelane tegelane){
-        System.out.println("kasuta");
         for (Oskus oskus: tegelane.getOskused()){
             oskus.vahenedaOnVajaOodata();
         }
@@ -66,16 +102,13 @@ public class ManguKontrollija {
         Oskus oskus = boss.getSuvalineOskus();
 
         if(oskus.getSaanKasutada()){
-            System.out.println("kasutan bossi oskust");
             vahenedaKoikOskused(boss);
             oskus.kasutaOskust();
-            if (oskus instanceof Runnak) {
-                tegelane.vahenedaHp(((Runnak) oskus).getDmg());
-                oskus.kasutaOskust();
-            }
+            vordleElmineJaPraeguneOskus(oskus, boss, tegelane);
+            enneOliKasutatud = oskus;
             return;
         }
-        System.out.println("Boss ei saa kasutada oskust");
+        enneOliKasutatud = null;
         vahenedaKoikOskused(boss);
 
     }
@@ -97,8 +130,10 @@ public class ManguKontrollija {
             Abi.valjastaValeAndmed();
             return;
         }
-        valideeriOskust();
-        ründaTegelast();
-        leiaVoitjat();
+        if(valideeriOskust()){
+            ründaTegelast();
+            leiaVoitjat();
+        };
+
     }
 }

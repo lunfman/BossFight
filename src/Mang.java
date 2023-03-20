@@ -11,6 +11,10 @@ public class Mang {
     Tegelane tegelaseValik;
     Boss bossiValik;
 
+    public void arvutaTegelaseXP(){
+        return;
+    }
+
     public int naitaValikMenu(String kirjeldus, List<ManguTegelane> manguTegelased){
         Scanner scanner = new Scanner(System.in);
         System.out.println(kirjeldus);
@@ -43,9 +47,10 @@ public class Mang {
 
     public void alustaMangu(){
         ManguKontrollija gameMaster = new ManguKontrollija(tegelaseValik, bossiValik);
-        while (gameMaster.mangKestab){
+        while (gameMaster.isMangKestab()){
             gameMaster.valjastaMangijaMenu();
         }
+        jookseb = false;
     }
 
     public void avaManguMenu(){
@@ -53,8 +58,7 @@ public class Mang {
         if(!jookseb) return;
         if(valiCharacteri()){
             alustaMangu();
-        };
-
+        }
     }
 
     public void alusta(){
