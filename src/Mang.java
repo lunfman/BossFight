@@ -10,6 +10,11 @@ public class Mang {
     Tegelane tegelaseValik;
     Boss bossiValik;
 
+    /**
+     * Mängu lõpus arvutame selle metoodi abil, kui palju xpt peab tegelane saama.
+     * @param tulemusViik väärtus on võimalik saada ManguKontrollija klassist
+     * @param tegelaneVoitsid väärtus on võimalik saada ManguKontrollija klassist
+     */
     public void arvutaTegelaseXP(boolean tulemusViik, boolean tegelaneVoitsid){
         if(tulemusViik){
             System.out.println("XP: 5");
@@ -22,6 +27,14 @@ public class Mang {
         }
     }
 
+    /**
+     * Meetod väljästab ekraanil kõik võimalikud mängutegelased, lisaks kontrolib, mida kasutajas sisestas.
+     *
+     * @param kirjeldus - String mida väljästatakse ekranile alguses
+     * @param manguTegelased - ManguTegelane List
+     * @return tagastab õige valiku või -1 juhul, kui valideerimine ebaõnnestus
+     */
+
     public int naitaValikMenu(String kirjeldus, List<ManguTegelane> manguTegelased){
         try {
             Scanner scanner = new Scanner(System.in);
@@ -31,10 +44,14 @@ public class Mang {
             valik = scanner.nextInt();
             return valik;
         }catch (InputMismatchException e){
-            System.out.println("Palun sisestage õiged andmed");
+            Abi.valjastaValeAndmed();
             return -1;
         }
     }
+
+    /**
+     *  Kuvab kõik bossid keda on võimalik valida ja lisaks valideerib valiku.
+     */
     public void valiBossi(){
         valik = naitaValikMenu("Vali bossi:", tegelased.bossid);
         if(valik > 0 && valik <= tegelased.bossid.size()){
@@ -47,9 +64,11 @@ public class Mang {
             return;
         }
 
-        System.out.println("Sisestage õiged andmed");
+        Abi.valjastaValeAndmed();
     }
-
+    /**
+     *  Kuvab kõik tegelased keda on võimalik valida ja lisaks valideerib valiku.
+     */
     public boolean valiCharacteri(){
         valik = naitaValikMenu("Vali character:", tegelased.tegelased);
         System.out.println(valik);
@@ -64,16 +83,20 @@ public class Mang {
             bossValitud = false;
             return false;
         }
-        System.out.println("Sisestage õiged andmed");
+        Abi.valjastaValeAndmed();
         return false;
     }
 
+    /**
+     *  loob ManguKontrollija ja kontrollib kas mäng veel kestab või mitte, kui mäng on läbi, siis
+     *  arvutame xpt ja viskame tagasi pea ekraanile
+     */
     public void alustaMangu(){
-        ManguKontrollija gameMaster = new ManguKontrollija(tegelaseValik, bossiValik);
-        while (gameMaster.isMangKestab()){
-            gameMaster.valjastaMangijaMenu();
+        ManguKontrollija manguKontrollija = new ManguKontrollija(tegelaseValik, bossiValik);
+        while (manguKontrollija.isMangKestab()){
+            manguKontrollija.valjastaMangijaMenu();
         }
-        arvutaTegelaseXP(gameMaster.isViik(), gameMaster.isTegelaneVoitsid());
+        arvutaTegelaseXP(manguKontrollija.isViik(), manguKontrollija.isTegelaneVoitsid());
         jookseb = false;
 
     }

@@ -30,6 +30,9 @@ public class ManguKontrollija {
         return mangKestab;
     }
 
+    /**
+     *  kontrollida, kes võitis ja lõpetada mäng.
+     */
     public void leiaVoitjat(){
         if(tegelane.getHp() <= 0 && boss.getHp() <= 0){
             System.out.println("Viik");
@@ -50,6 +53,12 @@ public class ManguKontrollija {
         }
     }
 
+    /**
+     * Kontrollime, mida kasutaja sisestas. Kontrollime, kas oli kasutatud pass.
+     * Vaatame, kas mängija saab kasutada oma oskusi. Kui vaja, siis me vähendame cd ooteaega.
+     * Kirjutame, et oskus oli ära kasutatud. Vaatame, mida boss kasutas.
+     * @return true kui kõik on korras
+     */
     public boolean valideeriOskust(){
         if(valik > tegelane.getOskused().size()  || valik < 0){
             System.out.println("Vale vaartus !!!!!!");
@@ -65,7 +74,7 @@ public class ManguKontrollija {
         Oskus oskus = tegelane.getOskus(valik);
 
         if(!oskus.getSaanKasutada()){
-            System.out.println("Te, ei saa praegu kasutada, seda oskust!!!!!!!!!!");
+            System.out.println("Te ei saa praegu seda oskust kasutada.!!!!!!!!!!");
             return false;
         }
         // kui jõuame siiamani, siis saame vahenedaCD
@@ -76,6 +85,13 @@ public class ManguKontrollija {
         return true;
     }
 
+    /**
+     * Võrdleme, mida oponent kasutas ja arvutame, mis juhtub.
+     * Siin kontrollime nt VastuRünnal - Rünnal, Kaitse - Rünnak, Rõnnak - Rünnak
+     * @param oskus mis oskus oli just kasutatud
+     * @param kesKasutas kes kasutas oskust
+     * @param kedaKontrollime kellega, võrdleme
+     */
     public void vordleElmineJaPraeguneOskus(Oskus oskus, ManguTegelane kesKasutas, ManguTegelane kedaKontrollime){
         if(oskus instanceof VastuRunnak){
             return;
@@ -94,12 +110,20 @@ public class ManguKontrollija {
         }
     }
 
+    /**
+     * vähendame kõik oskused tegelase või bossi jaoks.
+     * @param tegelane ehk ManguTegelane , kas Boss või Tegelane
+     */
     public void vahenedaKoikOskused(ManguTegelane tegelane){
         for (Oskus oskus: tegelane.getOskused()){
             oskus.vahenedaOnVajaOodata();
         }
     }
 
+    /**
+     * Bossi aju ..
+     * valime juhusliku oskuse ja kasutame seda, kui võimalik, muidu kasutame passi.
+     */
     public void ründaTegelast(){
         Oskus oskus = boss.getSuvalineOskus();
 
@@ -115,6 +139,9 @@ public class ManguKontrollija {
 
     }
 
+    /**
+     * Kuvab mängumenüü
+     */
     public void naitaManguMenu(){
         System.out.println(tegelane.getNimi() + " " + tegelane.getHp());
         System.out.println(boss.getNimi() + " " + boss.getHp());
@@ -122,6 +149,9 @@ public class ManguKontrollija {
         System.out.println(loendur+". pass");
     }
 
+    /**
+     * juhuslikult valime, kes alustab mängu
+     */
     public void otsustaKesAlustab(){
         if(!mangijaAlustab){
             System.out.println("Boss Alustab");
@@ -130,7 +160,7 @@ public class ManguKontrollija {
         }
     }
 
-
+    // "põhi meetood klassis"
     public void valjastaMangijaMenu(){
         leiaVoitjat();
         naitaManguMenu();
@@ -145,6 +175,5 @@ public class ManguKontrollija {
             ründaTegelast();
             leiaVoitjat();
         };
-
     }
 }

@@ -210,6 +210,10 @@ public class Test {
 
     }
 
+    public static void testiAbi(){
+
+    }
+
     public static void main(String[] args) {
         testiTegelane();
         testiBoss();
