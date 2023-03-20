@@ -13,7 +13,6 @@ public class Menu {
         if(valik == 1) {
             Mang mang = new Mang();
             mang.alusta();
-            return;
         }
         else if (valik== 2){
             Tegelased tegelased = new Tegelased();
@@ -22,12 +21,14 @@ public class Menu {
 
             System.out.println("Bossid: ");
             tegelased.getBossidInfo();
-            return;
         }
         else if (valik== 3){
             jooksen = false;
-            return;
-        };
+        }
+
+        else{
+            System.out.println("Vale valik!!!!");
+        }
     }
     public void avaMenu(){
         try {

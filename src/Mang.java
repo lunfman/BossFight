@@ -1,8 +1,8 @@
+import java.util.List;
 import java.util.Scanner;
 
 public class Mang {
-    String boss, character;
-    int valik = -1;
+    int valik;
     boolean jookseb = true, mangJookseb=true;
 
     Tegelased tegelased = new Tegelased();
@@ -11,42 +11,34 @@ public class Mang {
     Tegelane tegelaseValik;
     Boss bossiValik;
 
-    public void valiBossi(){
+    public int naitaValikMenu(String kirjeldus, List<ManguTegelane> manguTegelased){
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Vali bossi:");
-        int loendur = Abi.valjastaNumbigaJarjestatud(tegelased.bossid);
+        System.out.println(kirjeldus);
+        int loendur = Abi.valjastaNumbigaJarjestatud(manguTegelased);
         System.out.println(loendur + ". tagasi");
         valik = scanner.nextInt();
-
-        if(valik==1){
-            bossiValik = (Boss) tegelased.bossid.get(0);
-        }
-
-        if(valik == loendur){
-            jookseb = false;
+        return valik;
+    }
+    public void valiBossi(){
+        valik = naitaValikMenu("Vali bossi:", tegelased.bossid);
+        if(valik > 0 && valik <= tegelased.bossid.size()){
+            bossiValik = (Boss) tegelased.bossid.get(valik-1);
             return;
         }
-
-        boss = "Boss" + valik;
-
+        if(valik == tegelased.bossid.size()+1){
+            jookseb = false;
+        }
     }
 
-    public void valiCharacteri(){
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Vali character:");
-        int loendur = Abi.valjastaNumbigaJarjestatud(tegelased.tegelased);
-        System.out.println(loendur + ". tagasi");
-        valik = scanner.nextInt();
+    public boolean valiCharacteri(){
+        valik = naitaValikMenu("Vali character:", tegelased.tegelased);
 
-        if(valik==1){
+        if(valik > 0 && valik <= tegelased.tegelased.size()){
             tegelaseValik = (Tegelane) tegelased.tegelased.get(0);
+            return true;
         }
 
-        if(valik == loendur){
-            avaManguMenu();
-            return;
-        }
-        character = "Character" + valik;
+        return valik != tegelased.tegelased.size() + 1;
     }
 
     public void alustaMangu(){
@@ -59,8 +51,10 @@ public class Mang {
     public void avaManguMenu(){
         valiBossi();
         if(!jookseb) return;
-        valiCharacteri();
-        alustaMangu();
+        if(valiCharacteri()){
+            alustaMangu();
+        };
+
     }
 
     public void alusta(){
