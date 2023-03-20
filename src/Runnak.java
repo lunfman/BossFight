@@ -1,7 +1,7 @@
 public class Runnak extends Oskus{
     private int dmg;
-    public Runnak(String nimi, int cd, String[] omadused, String tuup, int dmg) {
-        super(nimi, cd, omadused, tuup);
+    public Runnak(String nimi, int cd, int dmg) {
+        super(nimi, cd);
         this.dmg = dmg;
     }
 

@@ -10,13 +10,6 @@ public class Menu {
     }
 
     /**
-     * meetod lopetab mängu, kasutame testimiseks.
-     */
-    public void lopeta(){
-        jooksen = false;
-    }
-
-    /**
      * meetood näitab, millised tegelased on mängus olemas.
      */
     public void naitaTegelasi(){

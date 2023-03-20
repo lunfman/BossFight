@@ -1,31 +1,20 @@
 public abstract class Oskus {
 
-    private String nimi, tuup;
+    private String nimi;
     private int  cd, onVajaOodata = 0;
-    private String[] omadused;
     private boolean saanKasutada = true;
 
-    public Oskus(String nimi, int cd, String[] omadused ,String tuup) {
+    public Oskus(String nimi, int cd) {
         this.nimi = nimi;
-        this.tuup = tuup;
         this.cd = cd;
-        this.omadused = omadused;
     }
 
     public String getNimi() {
         return nimi;
     }
 
-    public String getTuup() {
-        return tuup;
-    }
-
     public int getCd() {
         return cd;
-    }
-
-    public String[] getOmadused() {
-        return omadused;
     }
 
     public boolean getSaanKasutada() {

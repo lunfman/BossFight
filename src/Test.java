@@ -109,7 +109,7 @@ public class Test {
         testi(boss.toString(), nimi, kirjeldus);
 
         kirjeldus = "Boss lisaOskus and getOskus test";
-        Oskus oskus1 = new Runnak("t", 1, new String[]{"ok"}, "ok", 10);
+        Oskus oskus1 = new Runnak("t", 1, 10);
 
         boss.lisaOskust(oskus1);
 
@@ -126,7 +126,7 @@ public class Test {
         String[] omadused = {"stun"};
         String tuup = "tuli";
 
-        Oskus oskus = new Runnak(nimi ,cd, omadused, tuup, 10);
+        Oskus oskus = new Runnak(nimi ,cd, 10);
 
         String kirjeldus = "Test toString meetod";
         String peabOlema = "Attack 1 (10 dmg) (1 cd)";
@@ -141,12 +141,6 @@ public class Test {
         kirjeldus = "Test getSaanKasutada";
         testi(oskus.getSaanKasutada(), true, kirjeldus);
 
-        kirjeldus = "getOmadus";
-        testi(oskus.getOmadused().length, 1, kirjeldus);
-
-        kirjeldus = "getTuup";
-        testi(oskus.getTuup(), tuup, kirjeldus);
-
         kirjeldus = "kasutaOskust -> ei saa kasutada";
         oskus.kasutaOskust();
         testi(oskus.getSaanKasutada(), false, kirjeldus);
@@ -160,7 +154,7 @@ public class Test {
         testi(oskus.getSaanKasutada(), true, kirjeldus);
 
         kirjeldus = "Kasutame oskust, millel cd on 3, ja kontrollime toString";
-        oskus = new Runnak(nimi, 3, omadused, tuup, 10);
+        oskus = new Runnak(nimi, 3, 10);
         oskus.kasutaOskust();
         peabOlema = "Attack 1 (10 dmg) (3 cd) (saab kasutada parast 3 sammu)";
         testi(oskus.toString(), peabOlema, kirjeldus);
@@ -168,7 +162,7 @@ public class Test {
         System.out.println();
         System.out.println("Test Kaitse");
         kirjeldus = "Kaitse toString";
-        oskus = new Kaitse("Kaitse 1",cd,omadused,tuup);
+        oskus = new Kaitse("Kaitse 1",cd);
         peabOlema = "Kaitse 1 (1 cd)";
         testi(oskus.toString(), peabOlema, kirjeldus);
 
