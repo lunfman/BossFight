@@ -2,10 +2,10 @@ import java.util.Scanner;
 import java.util.InputMismatchException;
 
 public class ManguKontrollija {
-    Tegelane tegelane;
-    Boss boss;
-    int valik;
-    Oskus enneOliKasutatud;
+    private Tegelane tegelane;
+    private Boss boss;
+    private int valik;
+    private Oskus enneOliKasutatud;
 
     private boolean tegelaneVoitsid = false, viik = false, mangijaAlustab;
 
@@ -16,6 +16,18 @@ public class ManguKontrollija {
         this.boss = boss;
         this.mangijaAlustab = Math.random() >= 0.5;
         otsustaKesAlustab();
+    }
+
+    // testimiseks ainult, ei ole kena ((
+    public ManguKontrollija(Tegelane tegelane, Boss boss, boolean test) {
+        this.tegelane = tegelane;
+        this.boss = boss;
+        this.mangijaAlustab = Math.random() >= 0.5;
+    }
+
+    // testimiseks
+    public void setValik(int number){
+        this.valik = number;
     }
 
     public boolean isTegelaneVoitsid() {
@@ -174,6 +186,6 @@ public class ManguKontrollija {
         if(valideeriOskust()){
             ründaTegelast();
             leiaVoitjat();
-        };
+        }
     }
 }

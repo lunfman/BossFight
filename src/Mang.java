@@ -3,12 +3,12 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Mang {
-    int valik;
-    boolean jookseb = true, bossValitud = false;
+    private int valik;
+    private boolean jookseb = true, bossValitud = false;
 
-    Tegelased tegelased = new Tegelased();
-    Tegelane tegelaseValik;
-    Boss bossiValik;
+    private Tegelased tegelased = new Tegelased();
+    private Tegelane tegelaseValik;
+    private Boss bossiValik;
 
     /**
      * Mängu lõpus arvutame selle metoodi abil, kui palju xpt peab tegelane saama.
@@ -63,15 +63,12 @@ public class Mang {
             jookseb = false;
             return;
         }
-
-        Abi.valjastaValeAndmed();
     }
     /**
      *  Kuvab kõik tegelased keda on võimalik valida ja lisaks valideerib valiku.
      */
     public boolean valiCharacteri(){
         valik = naitaValikMenu("Vali character:", tegelased.tegelased);
-        System.out.println(valik);
         if(valik > 0 && valik <= tegelased.tegelased.size()){
             tegelaseValik = (Tegelane) tegelased.tegelased.get(valik-1);
             return true;
