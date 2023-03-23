@@ -1,3 +1,8 @@
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Test {
     public static void naidataErrori(String tekst){
         System.out.println("\u001B[31m"+tekst+"\u001B[0m");
@@ -121,10 +126,7 @@ public class Test {
         System.out.println("Test Runnak");
 
         String nimi = "Attack 1";
-        int dmg = 10;
         int cd = 1;
-        String[] omadused = {"stun"};
-        String tuup = "tuli";
 
         Oskus oskus = new Runnak(nimi ,cd, 10);
 
@@ -175,11 +177,19 @@ public class Test {
         int xp = 0;
         Tegelane tegelane = new Tegelane(nimi, hp, xp);
 
+        // oskus
+        String attackNimi = "Attack 1";
+        int cd = 1;
+        Oskus oskus = new Runnak(attackNimi ,cd, 10);
+        tegelane.lisaOskust(oskus);
+
+
+
         String nimib = "Boss";
         int hpb = 100;
         Boss boss = new Boss(nimib, hpb);
 
-        ManguKontrollija mk = new ManguKontrollija(tegelane, boss);
+        ManguKontrollija mk = new ManguKontrollija(tegelane, boss, true);
 
         String kirjeldus = "Kontrollime vaartust mangijaVoitsud";
         testi(mk.isTegelaneVoitsid(), false, kirjeldus);
@@ -191,7 +201,7 @@ public class Test {
         testi(mk.isMangKestab(), false, kirjeldus);
 
         kirjeldus = "Kontrollime mis juhtub kui boss hp = 0 ja mangija hp = 0";
-        mk = new ManguKontrollija(tegelane, boss);
+        mk = new ManguKontrollija(tegelane, boss, true);
         tegelane.setHp(0);
         boss.setHp(0);
         mk.leiaVoitjat();
@@ -200,7 +210,7 @@ public class Test {
         testi(mk.isViik(), true, kirjeldus);
 
         kirjeldus = "Kontrollime mis juhtub kui mängija võitsid";
-        mk = new ManguKontrollija(tegelane, boss);
+        mk = new ManguKontrollija(tegelane, boss, true);
         boss.setHp(0);
         tegelane.setHp(100);
         mk.leiaVoitjat();
@@ -208,9 +218,54 @@ public class Test {
         testi(mk.isMangKestab(), false, kirjeldus);
         testi(mk.isViik(), false, kirjeldus);
 
+        // valideeriOskust
+
+        kirjeldus = "Tegelnae saab kasutada oskust";
+        mk = new ManguKontrollija(tegelane, boss, true);
+        mk.setValik(0);
+        testi(mk.valideeriOskust(), true, kirjeldus);
+
+        kirjeldus = "Nuud tegelane, ei saa kusutada oskust, sest cd on 1";
+        testi(mk.valideeriOskust(), false, kirjeldus);
+
+        mk.vahenedaKoikOskused(tegelane);
+        kirjeldus = "vahenedaKoikOskused,  cd on labi";
+        testi(mk.valideeriOskust(), true, kirjeldus);
+
+        kirjeldus = "Vale valik";
+        mk.setValik(-1);
+        testi(mk.valideeriOskust(), false, kirjeldus);
+
+        kirjeldus = "Vale valik liiga suur";
+        mk.setValik(2);
+        testi(mk.valideeriOskust(), false, kirjeldus);
+
     }
 
     public static void testiAbi(){
+        String nimi = "Lord";
+        int hp = 100;
+        int xp = 0;
+        Tegelane tegelane = new Tegelane(nimi, hp, xp);
+
+        String attackNimi = "Attack 1";
+        int cd = 1;
+        Oskus oskus = new Runnak(attackNimi ,cd, 10);
+        tegelane.lisaOskust(oskus);
+
+
+        String nimib = "Boss";
+        int hpb = 100;
+        Boss boss = new Boss(nimib, hpb);
+
+        List<ManguTegelane> tegelased = new ArrayList<>();
+        tegelased.add(tegelane);
+
+        String kirjeluds = "Abi tagastba järmine number";
+        testi(Abi.valjastaNumbigaJarjestatud(tegelased), 2, kirjeluds);
+
+        kirjeluds = "Abi tagastba järmine oskus";
+        testi(Abi.valjastaNumbigaJarjestatudOskus(tegelane.getOskused()), 2, kirjeluds);
 
     }
 
@@ -219,5 +274,6 @@ public class Test {
         testiBoss();
         testiOskus();
         testiManguKontrollija();
+        testiAbi();
     }
 }
