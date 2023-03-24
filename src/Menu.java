@@ -5,8 +5,18 @@ public class Menu {
     int valik = -1;
     boolean jooksen = true;
 
+    String logo = " ______                ______ _       _     _   \n" +
+            "| ___ \\               |  ___(_)     | |   | |  \n" +
+            "| |_/ / ___  ___ ___  | |_   _  __ _| |__ | |_ \n" +
+            "| ___ \\/ _ \\/ __/ __| |  _| | |/ _` | '_ \\| __|\n" +
+            "| |_/ / (_) \\__ \\__ \\ | |   | | (_| | | | | |_ \n" +
+            "\\____/ \\___/|___/___/ \\_|   |_|\\__, |_| |_|\\__|\n" +
+            "                                __/ |          \n" +
+            "                               |___/"
+            ;
+
     public Menu() {
-        System.out.println("Welcome, blalblalvladlaskdopapaskdas:");
+        System.out.println(logo);
     }
 
     /**
