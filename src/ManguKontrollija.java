@@ -155,8 +155,8 @@ public class ManguKontrollija {
      * Kuvab mängumenüü
      */
     public void naitaManguMenu(){
-        System.out.println(tegelane.getNimi() + " " + tegelane.getHp());
-        System.out.println(boss.getNimi() + " " + boss.getHp());
+        System.out.println(tegelane.getNimi() + " " + tegelane.getHp() + " HP");
+        System.out.println(boss.getNimi() + " " + boss.getHp() + " HP");
         int loendur = Abi.valjastaNumbigaJarjestatudOskus(tegelane.getOskused());
         System.out.println(loendur+". pass");
     }
