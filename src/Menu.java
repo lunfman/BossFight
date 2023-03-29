@@ -70,7 +70,6 @@ public class Menu {
             valideeriValik();
         }catch (InputMismatchException e){
             Abi.valjastaValeAndmed();
-            avaMenu();
         }
 
     }}
