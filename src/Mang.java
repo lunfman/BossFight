@@ -1,3 +1,5 @@
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -10,21 +12,31 @@ public class Mang {
     private Tegelane tegelaseValik;
     private Boss bossiValik;
 
+    public Mang() throws IOException {
+    }
+
     /**
      * Mängu lõpus arvutame selle metoodi abil, kui palju xpt peab tegelane saama.
      * @param tulemusViik väärtus on võimalik saada ManguKontrollija klassist
      * @param tegelaneVoitsid väärtus on võimalik saada ManguKontrollija klassist
      */
-    public void arvutaTegelaseXP(boolean tulemusViik, boolean tegelaneVoitsid){
+    public void arvutaTegelaseXP(boolean tulemusViik, boolean tegelaneVoitsid) throws IOException {
+        String xp = "";
         if(tulemusViik){
-            System.out.println("XP: 5");
+            xp = "5";
         }
         else if(tegelaneVoitsid){
-            System.out.println("Xp: 10");
+            xp = "10";
         }
         else {
-            System.out.println("XP: 2");
+            xp = "2";
         }
+
+        FileWriter writer = new FileWriter("xp.txt", true);
+        writer.write(xp + System.lineSeparator());
+        writer.close();
+
+        System.out.println("XP: " + xp);
     }
 
     /**
@@ -88,7 +100,7 @@ public class Mang {
      *  loob ManguKontrollija ja kontrollib kas mäng veel kestab või mitte, kui mäng on läbi, siis
      *  arvutame xpt ja viskame tagasi pea ekraanile
      */
-    public void alustaMangu(){
+    public void alustaMangu() throws IOException {
         ManguKontrollija manguKontrollija = new ManguKontrollija(tegelaseValik, bossiValik);
         while (manguKontrollija.isMangKestab()){
             manguKontrollija.valjastaMangijaMenu();
@@ -98,7 +110,7 @@ public class Mang {
 
     }
 
-    public void avaManguMenu(){
+    public void avaManguMenu() throws IOException {
         if(!bossValitud) valiBossi();
         if(!jookseb || !bossValitud) return;
         if(valiCharacteri()){
@@ -106,7 +118,7 @@ public class Mang {
         }
     }
 
-    public void alusta(){
+    public void alusta() throws IOException {
         while (jookseb){
             avaManguMenu();
         }

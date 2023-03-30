@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -17,12 +18,16 @@ public class Menu {
 
     public Menu() {
         System.out.println(logo);
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Mängija nimi: ");
+        String nimi = scanner.nextLine();
+        System.out.println("Tere tulemast mängu BossFight, " + nimi + "!" + "\n" + "Mängu eesmärgiks on võita bossid. Selleks saad kasutada erinevaid oskusi, mis su tegelasel on.");
     }
 
     /**
      * meetood näitab, millised tegelased on mängus olemas.
      */
-    public void naitaTegelasi(){
+    public void naitaTegelasi() throws IOException  {
         Tegelased tegelased = new Tegelased();
         System.out.println("Tegelased: ");
         tegelased.getTegelasedInfo();
@@ -38,7 +43,7 @@ public class Menu {
      * 3. Tagasi - exit
      * Kui valik oli vale, väljastab teavet.
      */
-    public void valideeriValik () {
+    public void valideeriValik () throws IOException {
         if(valik == 1) {
             Mang mang = new Mang();
             mang.alusta();
@@ -59,7 +64,7 @@ public class Menu {
      * Valik salvestatakse ja pärast valideeritatakse valideeriValik abil.
      * Kui kasutaja, sisestab jama infot, anname teada, et see ei tööta
      */
-    public void avaMenu(){
+    public void avaMenu() throws IOException {
         try {
             Scanner scanner = new Scanner(System.in);
             System.out.println("1. Alusta mängu");
