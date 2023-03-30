@@ -1,3 +1,6 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -5,14 +8,26 @@ public class Tegelased {
     public List<ManguTegelane> tegelased;
     public List<ManguTegelane> bossid;
 
-    public Tegelased() {
+    public Tegelased() throws IOException {
         tegelased = new ArrayList<>();
         bossid = new ArrayList<>();
         lisa();
     }
 
-    public  void lisa (){
-        Tegelane t1 = new Tegelane("Frost the Icicle Warrior", 100, 101);
+    public int setXpFailist() throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader("xp.txt"));
+        int xp = 0;
+        for (String rida = reader.readLine(); rida != null; rida = reader.readLine()) {
+            xp += Integer.parseInt(rida);
+        }
+        reader.close();
+
+        return xp;
+
+    }
+
+    public  void lisa () throws IOException {
+        Tegelane t1 = new Tegelane("Frost the Icicle Warrior", 100, setXpFailist());
         Runnak oskus1 = new Runnak("Mighty Bash 1", 1,  10);
         Kaitse oskus2 = new Kaitse("Steel Shield", 2);
         Runnak oskus3 = new Runnak("Brave Stab", 2, 30);
